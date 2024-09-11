@@ -1,7 +1,9 @@
 import logo from "@/assets/buenaventura-horizontal-logo.jpg"
 import type { Metadata, ResolvingMetadata } from "next";
+import { PiCalendarCheckLight } from "react-icons/pi";
 import { notFound } from 'next/navigation';
 import Image from "next/image";
+import Link from "next/link";
 
 type Props = { params: { hotel: string } };
 type HotelData = { id: number; hotel_name: string; logo: string; };
@@ -53,7 +55,7 @@ export default async function HotelPage({ params }: Props) {
     <div>
       {/* navbar */}
       <header>
-        <nav aria-label="Global" className="flex items-center justify-between p-6 lg:px-8">
+        <nav aria-label="Global" className="flex items-center justify-between pt-6 ">
             <div className="flex lg:flex-1">
               <Image
                 alt={`${hotelData.hotel_name} logo`}
@@ -71,6 +73,17 @@ export default async function HotelPage({ params }: Props) {
       </header>
 
       <main>
+
+      <div className="flex items-center justify-between lg:m-8 mt-8">
+        <div className="flex items-center">
+          <PiCalendarCheckLight className="text-2xl text-brown-500 mr-2 h-8 w-8" />
+          <span className="text-sm text-gray-800 md:text-lg">What&apos;s on next</span>
+        </div>
+        <Link href={'/'} className="bg-brown-500 rounded hover:bg-brown-600 transition text-sm md:text-lg">
+          See all today&apos;s services
+        </Link>
+      </div>
+
       </main>
     </div>
   );
