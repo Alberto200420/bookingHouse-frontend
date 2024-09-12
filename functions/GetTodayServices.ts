@@ -3,6 +3,7 @@ import { cache } from 'react';
 export type TodayServicesProps = {
   id: string;
   title: string;
+  domain: string;
   header_image: string;
   availabilities: string[];
   require_reservation: boolean;

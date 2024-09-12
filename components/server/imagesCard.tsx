@@ -8,7 +8,7 @@ const formatTime = (time: string): string => {
   return `${formattedHours}:${minutes.toString().padStart(2, '0')} ${period}`;
 };
 
-export default function ImagesCard({ id, title, header_image, availabilities, require_reservation }: TodayServicesProps ) {
+export default function ImagesCard({ id, title, header_image, domain, availabilities, require_reservation }: TodayServicesProps ) {
   return (
     <div className="group relative rounded-lg shadow hover:shadow-lg transition-all">
       <div className="aspect-w-1 aspect-h-1 w-full overflow-hidden rounded-t-lg">
@@ -20,7 +20,7 @@ export default function ImagesCard({ id, title, header_image, availabilities, re
       </div>
       <div className="p-4">
         <h3 className="text-lg font-semibold">
-          <Link href={`/service/${id}`}>
+          <Link href={`${domain}/service/${id}`}>
             <span aria-hidden="true" className="absolute inset-0" />
             {title}
           </Link>
