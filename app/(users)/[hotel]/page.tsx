@@ -42,6 +42,8 @@ export async function generateMetadata( { params }: Props, parent: ResolvingMeta
     description: `Disfruta de tus vacaciones en ${hotelData.hotel_name}. Reserva servicios, encuentra todo lo que necesitas para ti.`,
     openGraph: {
       images: [hotelData.logo],
+      title: hotelData.hotel_name,
+      description: `Disfruta de tus vacaciones en ${hotelData.hotel_name}. Reserva servicios, encuentra todo lo que necesitas para ti.`,
     },
   };
 }
@@ -56,7 +58,6 @@ export default async function HotelPage({ params }: Props) {
     notFound();
   }
 
-  console.log(hotelData.logo)
   return (
     <div>
       {/* navbar */}
