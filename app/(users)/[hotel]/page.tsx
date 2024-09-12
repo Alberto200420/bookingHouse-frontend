@@ -4,6 +4,8 @@ import { PiCalendarCheckLight } from "react-icons/pi";
 import { notFound } from 'next/navigation';
 import Image from "next/image";
 import Link from "next/link";
+import ImagesCard from "@/components/server/imagesCard";
+import { getTodayServices, TodayServicesProps } from "@/functions/GetTodayServices";
 
 type Props = { params: { hotel: string } };
 type HotelData = { id: number; hotel_name: string; logo: string; };
@@ -45,6 +47,7 @@ export async function generateMetadata( { params }: Props, parent: ResolvingMeta
 export default async function HotelPage({ params }: Props) {
 
   const hotelData = await getHotelData(params.hotel);
+  const todayServices = await getTodayServices();
 
   if (!hotelData) {
     notFound();
@@ -74,15 +77,31 @@ export default async function HotelPage({ params }: Props) {
 
       <main>
 
-      <div className="flex items-center justify-between lg:m-8 mt-8">
-        <div className="flex items-center">
-          <PiCalendarCheckLight className="text-2xl text-brown-500 mr-2 h-8 w-8" />
-          <span className="text-sm text-gray-800 md:text-lg">What&apos;s on next</span>
+        {/* Display today's services using ImagesCard */}
+        <div>
+          <div className="flex items-center justify-between lg:m-8 mt-8">
+            <div className="flex items-center">
+              <PiCalendarCheckLight className="text-2xl text-brown-500 mr-2 h-8 w-8" />
+              <span className="text-sm text-gray-800 md:text-lg">today&apos;s services</span>
+            </div>
+            <Link href={'/'} className="bg-brown-500 rounded hover:bg-brown-600 transition text-sm md:text-lg">
+              See all today&apos;s services
+            </Link>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-8">
+            {todayServices.map((service: TodayServicesProps) => (
+              <ImagesCard
+                key={service.id}
+                id={service.id}
+                title={service.title}
+                header_image={service.header_image}
+                availabilities={service.availabilities}
+                require_reservation={service.require_reservation}
+              />
+            ))}
+          </div>
         </div>
-        <Link href={'/'} className="bg-brown-500 rounded hover:bg-brown-600 transition text-sm md:text-lg">
-          See all today&apos;s services
-        </Link>
-      </div>
 
       </main>
     </div>
