@@ -78,18 +78,18 @@ export default async function HotelPage({ params }: Props) {
       <main>
 
         {/* Display today's services using ImagesCard */}
-        <div>
-          <div className="flex items-center justify-between lg:m-8 mt-8">
+        <div className="px-8">
+          <div className="flex items-center justify-between mt-6">
             <div className="flex items-center">
-              <PiCalendarCheckLight className="text-2xl text-brown-500 mr-2 h-8 w-8" />
-              <span className="text-sm text-gray-800 md:text-lg">today&apos;s services</span>
+              <PiCalendarCheckLight className="text-2xl mr-2 h-8 w-8" />
+              <span className="text-sm md:text-lg">today&apos;s services</span>
             </div>
             <Link href={'/'} className="bg-brown-500 rounded hover:bg-brown-600 transition text-sm md:text-lg">
               See all today&apos;s services
             </Link>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-6">
             {todayServices.map((service: TodayServicesProps) => (
               <ImagesCard
                 key={service.id}
