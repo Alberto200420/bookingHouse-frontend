@@ -120,7 +120,7 @@ export default async function ServicePage({ params }: { params: { id: string } }
           </div>
         </section>
 
-        <AvailabilityCalendar availabilities={service.availabilities} />
+        <AvailabilityCalendar availabilities={service.availabilities} id={service.id} />
 
       </div>
     </main>
