@@ -63,7 +63,7 @@ export default async function HotelPage({ params }: Props) {
       {/* navbar */}
       <header>
         <nav aria-label="Global" className="flex items-center justify-between pt-6 ">
-            <div className="flex lg:flex-1">
+            <div className="flex">
               <Image
                 alt={`${hotelData.hotel_name} logo`}
                 src={logo}
@@ -71,7 +71,7 @@ export default async function HotelPage({ params }: Props) {
                 height={200}
               />
             </div>
-            <div className=" lg:flex lg:flex-1 lg:justify-end">
+            <div className=" lg:flex lg:justify-end">
               <a href="#" className="text-sm font-semibold leading-6 text-gray-900">
                 Log in <span aria-hidden="true">&rarr;</span>
               </a>

@@ -1,4 +1,5 @@
 import PathHeader from '@/components/client/pathHeader';
+import { IoStar } from "react-icons/io5";
 import { Metadata } from 'next';
 // import Image from 'next/image';
 import { notFound } from 'next/navigation';
@@ -63,13 +64,12 @@ export default async function ServicePage({ params }: { params: { id: string } }
 
   return (
     <main>
-      <div className="max-w-screen-lg mx-auto">
         <img
           src={'https://litter.catbox.moe/9i0j6r.jpeg'}
           alt={service.title}
-          className="mb-4 rounded-lg"
+          className="mb-4 w-full h-1/3"
         />
-
+      <div className="max-w-screen-lg mx-auto">
 
         <section className="mb-8 px-4">
           
@@ -125,6 +125,21 @@ export default async function ServicePage({ params }: { params: { id: string } }
               </div>
             ))}
           </div>
+        </section>
+
+        <section className="flex items-center justify-between pt-6 pb-10 px-4">
+          <div className="md:flex items-center md:space-x-2 space-x-0">
+            <div className="md:text-2xl text-sm font-bold">4.98</div>
+            <div className="flex items-center">
+              {[...Array(5)].map((_, i) => (
+                <IoStar key={i} className="w-4 h-4 fill-current text-yellow-400 md:w-7 md:h-7" />
+              ))}
+            </div>
+            <div className="text-sm text-gray-600 underline">84 Evaluaciones</div>
+          </div>
+          <button className="px-12 py-2 border border-[#0800FA] text-[#0800FA] rounded-md hover:bg-[#0800FA] hover:text-white transition-colors">
+            Reserve
+          </button>
         </section>
 
       </div>
