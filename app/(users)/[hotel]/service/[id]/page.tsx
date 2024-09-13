@@ -1,9 +1,9 @@
 import PathHeader from '@/components/client/pathHeader';
-import { IoStar } from "react-icons/io5";
 import { Metadata } from 'next';
 // import Image from 'next/image';
 import { notFound } from 'next/navigation';
 import { LuBookOpen } from "react-icons/lu";
+import AvailabilityCalendar from '@/components/server/calendar';
 
 // TypeScript interface for the API response
 interface ServiceData {
@@ -46,13 +46,6 @@ export async function generateMetadata({ params }: { params: { id: string } }): 
   };
 }
 
-const formatTime = (time: string): string => {
-  const [hours, minutes] = time.split(':').map(Number);
-  const period = hours >= 12 ? 'PM' : 'AM';
-  const formattedHours = ((hours + 11) % 12 + 1); // Convertir a formato de 12 horas
-  return `${formattedHours}:${minutes.toString().padStart(2, '0')} ${period}`;
-};
-
 // ServicePage component that fetches data on the server-side
 export default async function ServicePage({ params }: { params: { id: string } }) {
   const res = await fetch(`${process.env.API_BACKEND}/directory/service/${params.id}/`, {cache: 'no-store'} );
@@ -64,11 +57,11 @@ export default async function ServicePage({ params }: { params: { id: string } }
 
   return (
     <main>
-        <img
-          src={'https://litter.catbox.moe/9i0j6r.jpeg'}
-          alt={service.title}
-          className="mb-4 w-full h-1/3"
-        />
+      <img
+        src={'https://litter.catbox.moe/9i0j6r.jpeg'}
+        alt={service.title}
+        className="mb-4 w-full h-1/3"
+      />
       <div className="max-w-screen-lg mx-auto">
 
         <section className="mb-8 px-4">
@@ -127,36 +120,9 @@ export default async function ServicePage({ params }: { params: { id: string } }
           </div>
         </section>
 
-        <section className="flex items-center justify-between pt-6 pb-10 px-4">
-          <div className="md:flex items-center md:space-x-2 space-x-0">
-            <div className="md:text-2xl text-sm font-bold">4.98</div>
-            <div className="flex items-center">
-              {[...Array(5)].map((_, i) => (
-                <IoStar key={i} className="w-4 h-4 fill-current text-yellow-400 md:w-7 md:h-7" />
-              ))}
-            </div>
-            <div className="text-sm text-gray-600 underline">84 Evaluaciones</div>
-          </div>
-          <button className="px-12 py-2 border border-[#0800FA] text-[#0800FA] rounded-md hover:bg-[#0800FA] hover:text-white transition-colors">
-            Reserve
-          </button>
-        </section>
+        <AvailabilityCalendar availabilities={service.availabilities} />
 
       </div>
     </main>
   );
 }
-
-          {/* <div className="mb-4">
-            <h3 className="text-xl font-semibold">Available Times</h3>
-            {Object.keys(service.availabilities).map((day) => (
-              <div key={day} className="mb-2">
-                <h4 className="font-bold">{day}</h4>
-                <p>
-                  {service.availabilities[day].availableTimes
-                    .map((time: string) => formatTime(time))
-                    .join(", ")}
-                </p>
-              </div>
-            ))}
-          </div> */}
