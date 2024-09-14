@@ -3,7 +3,7 @@ import { Metadata } from 'next';
 // import Image from 'next/image';
 import { notFound } from 'next/navigation';
 import { LuBookOpen } from "react-icons/lu";
-import AvailabilityCalendar from '@/components/server/calendar';
+import AvailabilityCalendar from '@/components/client/calendar';
 
 // TypeScript interface for the API response
 interface ServiceData {

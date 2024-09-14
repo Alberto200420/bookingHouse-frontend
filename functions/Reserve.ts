@@ -4,7 +4,6 @@ import { cookies } from 'next/headers';
 interface ReserveParams {
   service: string;
   number_of_people: number;
-  reservation_name: string;
   booking_date: string;
 }
 
@@ -16,10 +15,6 @@ interface ReservationResponse {
 export const Reserve = async (params: ReserveParams): Promise<ReservationResponse> => {
   const cookieStore = cookies();
   const accessCookie = cookieStore.get('access')?.value;
-
-  // if (!accessCookie) {
-  //   throw new Error('Credenciales caducadas, intenta iniciar sesión nuevamente');
-  // }
 
   try {
     const response = await fetch(`${process.env.API_BACKEND}/reservations/reserve/`, {

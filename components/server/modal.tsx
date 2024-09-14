@@ -5,7 +5,7 @@ interface ModalProps {
   isOpen: boolean;
   onClose: () => void;
   title: string;
-  content: ReactNode;
+  content: React.JSX.Element | ReactNode;
   actionButtonText: string;
   onAction: () => void;
 }
