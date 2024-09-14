@@ -72,8 +72,8 @@ export default async function ServicePage({ params }: { params: { id: string } }
           <h2 className="text-3xl md:text-5xl font-bold mb-2 text-center">{service.title}</h2>
 
           {service.menu && (
-            <div className="flex items-center mb-4">
-              <a href="#" className='bg-gray-400 p-1 flex items-center rounded'>
+            <div className="flex items-center my-6">
+              <a href="#" className='bg-gray-400 py-1 px-2 flex items-center rounded'>
                 <LuBookOpen className="text-brown-500 text-2xl mr-2" />
                 <span className="text-lg">Menu</span>
               </a>

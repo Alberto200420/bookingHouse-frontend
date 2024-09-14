@@ -59,7 +59,7 @@ export default async function HotelPage({ params }: Props) {
   }
 
   return (
-    <div>
+    <div className="px-8">
       {/* navbar */}
       <header>
         <nav aria-label="Global" className="flex items-center justify-between pt-6 ">

@@ -1,3 +1,4 @@
+'use server';
 import { cookies } from 'next/headers';
 
 interface ReserveParams {
@@ -16,9 +17,9 @@ export const Reserve = async (params: ReserveParams): Promise<ReservationRespons
   const cookieStore = cookies();
   const accessCookie = cookieStore.get('access')?.value;
 
-  if (!accessCookie) {
-    throw new Error('Credenciales caducadas, intenta iniciar sesión nuevamente');
-  }
+  // if (!accessCookie) {
+  //   throw new Error('Credenciales caducadas, intenta iniciar sesión nuevamente');
+  // }
 
   try {
     const response = await fetch(`${process.env.API_BACKEND}/reservations/reserve/`, {

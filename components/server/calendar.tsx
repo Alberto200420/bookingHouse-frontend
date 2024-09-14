@@ -4,7 +4,8 @@ import React, { useState } from 'react';
 import { MdOutlineChevronLeft, MdOutlineChevronRight } from "react-icons/md";
 import { IoStar } from "react-icons/io5";
 import { formatTime } from '@/functions/formatTime';
-import { Reserve } from '@/functions/reserve';
+import { Reserve } from '@/functions/Reserve';
+import Modal from './modal';
 
 interface TimeSlot {
   date: string;
@@ -33,11 +34,17 @@ const AvailabilityCalendar: React.FC<AvailabilityCalendarProps> = ({ availabilit
   const [selectedHour, setSelectedHour] = useState<string | null>(null);
   const [reservationStatus, setReservationStatus] = useState<string | null>(null);
   const [attendees, setAttendees] = useState<number>(1);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [name, setName] = useState<string>('');
+  const [roomNumber, setRoomNumber] = useState<number | undefined>(undefined);
+  const [checkIn, setCheckIn] = useState<string>('');
+  const [checkOut, setCheckOut] = useState<string>('');
 
   const getDaysInMonth = (year: number, month: number): number => new Date(year, month + 1, 0).getDate();
   const getFirstDayOfMonth = (year: number, month: number): number => new Date(year, month, 1).getDay();
 
-  const renderCalendar = (): JSX.Element[] => {
+  // components
+  const renderCalendar = (): React.JSX.Element[] => {
     const year = currentDate.getFullYear();
     const month = currentDate.getMonth();
     const daysInMonth = getDaysInMonth(year, month);
@@ -68,7 +75,7 @@ const AvailabilityCalendar: React.FC<AvailabilityCalendarProps> = ({ availabilit
     return days;
   };
 
-  const renderAvailableTimes = (): JSX.Element | null => {
+  const renderAvailableTimes = (): React.JSX.Element | null => {
     if (!selectedDate) return null;
 
     const dayOfWeek = daysOfWeek[selectedDate.getDay()];
@@ -95,13 +102,81 @@ const AvailabilityCalendar: React.FC<AvailabilityCalendarProps> = ({ availabilit
     );
   };
 
+  function LogInForm () {
+    return (
+      <div className="mt-4">
+        <div className="mb-4">
+          <label className="block text-sm font-medium text-gray-700">Name</label>
+          <input
+            type="text"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            className="block w-full mt-1 p-2 border rounded-md shadow-sm focus:ring focus:ring-opacity-50"
+            placeholder="Enter your name"
+          />
+        </div>
+
+        <div className="mb-4">
+          <label className="block text-sm font-medium text-gray-700">Room Number</label>
+          <input
+            type="number"
+            value={roomNumber}
+            onChange={(e) => setRoomNumber(parseInt(e.target.value))}
+            className="block w-full mt-1 p-2 border rounded-md shadow-sm focus:ring focus:ring-opacity-50"
+            placeholder="Enter room number"
+          />
+        </div>
+
+        <div className="mb-4">
+          <label className="block text-sm font-medium text-gray-700">Check-in Date</label>
+          <input
+            type="date"
+            value={checkIn}
+            onChange={(e) => setCheckIn(e.target.value)}
+            className="block w-full mt-1 p-2 border rounded-md shadow-sm focus:ring focus:ring-opacity-50"
+          />
+        </div>
+
+        <div className="mb-4">
+          <label className="block text-sm font-medium text-gray-700">Check-out Date</label>
+          <input
+            type="date"
+            value={checkOut}
+            onChange={(e) => setCheckOut(e.target.value)}
+            className="block w-full mt-1 p-2 border rounded-md shadow-sm focus:ring focus:ring-opacity-50"
+          />
+        </div>
+      </div>
+    )
+  }
+
+  // functions
   const reserve = async () => {
     if (!selectedDate || !selectedHour || !attendees) {
-      setReservationStatus('Please fill the form.');
+      setReservationStatus('Please fill out the form.');
       return;
     }
-  
-    // call here the Reserve function
+
+    try {
+      const reservationDateTime = `${selectedDate.toISOString().split('T')[0]} ${selectedHour}:00`;
+      const reservationData = {
+        service: id,
+        number_of_people: attendees,
+        reservation_name: 'Ricardo Meza', // Replace with dynamic data if needed
+        booking_date: reservationDateTime,
+      };
+      const response = await Reserve(reservationData);
+      setReservationStatus(`Reservation successful! ID: ${response.reservation_id}`);
+    } catch (error: any) {
+      setIsModalOpen(true)
+    }
+  };
+
+  const closeModal = () => setIsModalOpen(false);
+
+  const handleAction = () => {
+    console.log('Action performed');
+    setIsModalOpen(false)
   };
 
   return (
@@ -178,6 +253,15 @@ const AvailabilityCalendar: React.FC<AvailabilityCalendarProps> = ({ availabilit
           Reserve
         </button>
       </section>
+
+      <Modal
+        isOpen={isModalOpen}
+        onClose={closeModal}
+        title="Register to book"
+        content={LogInForm()}
+        actionButtonText="Log in"
+        onAction={handleAction}
+      />
 
     </div>
   );
