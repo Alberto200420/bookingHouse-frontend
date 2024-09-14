@@ -1,5 +1,6 @@
 'use server';
 import { cookies } from 'next/headers';
+import { revalidatePath } from 'next/cache'
 
 interface ReserveParams {
   service: string;
@@ -33,6 +34,7 @@ export const Reserve = async (params: ReserveParams): Promise<ReservationRespons
 
     const data: ReservationResponse = await response.json();
     console.log('Reservation created successfully:', data.message);
+    revalidatePath('/(users)/[hotel]', 'page')
     return data;
   } catch (error) {
     if (error instanceof Error) {

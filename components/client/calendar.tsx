@@ -7,6 +7,7 @@ import { formatTime } from '@/functions/formatTime';
 import { Reserve } from '@/functions/Reserve';
 import Modal from '../server/modal';
 import SignUpLogIn from '@/functions/SignUpLogIn';
+import { useRouter, useParams } from 'next/navigation'
 
 interface TimeSlot {
   date: string;
@@ -36,10 +37,12 @@ const AvailabilityCalendar: React.FC<AvailabilityCalendarProps> = ({ availabilit
   const [reservationStatus, setReservationStatus] = useState<string | null>(null);
   const [attendees, setAttendees] = useState(1);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const params = useParams<{ hotel: string }>()
+  const router = useRouter()
   const [modalProps, setModalProps] = useState({
     title: '',
     content: '' as string | ReactNode,
-    actionButtonText: '',
+    actionButtonText: '' as string | null,
     onAction: () => {}
   });
 
@@ -129,6 +132,7 @@ const AvailabilityCalendar: React.FC<AvailabilityCalendarProps> = ({ availabilit
             <label className="block text-sm font-medium text-gray-700">{field.replace(/([A-Z])/g, ' $1')}</label>
             <input
               type={field === 'roomNumber' ? 'number' : field.includes('check') ? 'date' : 'text'}
+              required
               value={(formState as any)[field] ?? ''}
               onChange={e => handleInputChange(field, field === 'roomNumber' ? parseInt(e.target.value) : e.target.value)}
               className="block w-full mt-1 p-2 border rounded-md shadow-sm focus:ring focus:ring-opacity-50"
@@ -164,14 +168,14 @@ const AvailabilityCalendar: React.FC<AvailabilityCalendarProps> = ({ availabilit
         title: "Booked successfully",
         content: `${response.message}. Check your email for the details.`,
         actionButtonText: 'Close',
-        onAction: closeModal
+        onAction: () => router.push(`/${params.hotel}`)
       });
       setIsModalOpen(true);
     } catch (error) {
       setModalProps({
         title: "Register to book",
         content: <LogInForm onSubmit={handleAction} />,
-        actionButtonText: '',
+        actionButtonText: null,
         onAction: () => {}
       });
       setIsModalOpen(true);

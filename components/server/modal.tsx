@@ -6,7 +6,7 @@ interface ModalProps {
   onClose: () => void;
   title: string;
   content: React.JSX.Element | ReactNode;
-  actionButtonText: string;
+  actionButtonText: string | null;
   onAction: () => void;
 }
 
@@ -29,14 +29,16 @@ export default function Modal ({ isOpen, onClose, title, content, actionButtonTe
             <div className="mt-2">
               {content}
             </div>
-            <div className="mt-4">
-              <Button
-                className="w-full gap-2 rounded-md bg-[#0800FA] py-1.5 font-semibold text-white"
-                onClick={onAction}
-              >
-                {actionButtonText}
-              </Button>
-            </div>
+            {actionButtonText && (
+              <div className="mt-4">
+                <Button
+                  className="w-full gap-2 rounded-md bg-[#0800FA] py-1.5 font-semibold text-white"
+                  onClick={onAction}
+                >
+                  {actionButtonText}
+                </Button>
+              </div>
+            )}
           </DialogPanel>
         </div>
       </div>
