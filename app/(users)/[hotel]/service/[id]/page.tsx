@@ -6,6 +6,11 @@ import { LuBookOpen } from "react-icons/lu";
 import AvailabilityCalendar from '@/components/client/calendar';
 
 // TypeScript interface for the API response
+interface TimeSlot {
+  date: string;
+  times: string[];
+}
+
 interface ServiceData {
   id: string;
   category: string;
@@ -13,7 +18,7 @@ interface ServiceData {
   menu: string | null;
   header_image: string;
   description: string;
-  availabilities: Record<string, any>;
+  availabilities: Record<string, { availableTimes: string[], DatesTimesNotAvailable: TimeSlot[] }>;
   requirement: string;
   require_reservation: boolean;
   maximum_capacity: number;

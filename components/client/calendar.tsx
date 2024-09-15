@@ -15,6 +15,13 @@ interface TimeSlot {
   times: string[];
 }
 
+interface FormData {
+  name: string;
+  roomNumber: number | null;
+  checkIn: string;
+  checkOut: string;
+}
+
 interface DayAvailability {
   availableTimes: string[];
   DatesTimesNotAvailable: TimeSlot[];
@@ -110,7 +117,7 @@ const AvailabilityCalendar: React.FC<AvailabilityCalendarProps> = ({ availabilit
     );
   };
 
-  const LogInForm = ({ onSubmit }: { onSubmit: (formData: any) => void }) => {
+  const LogInForm = ({ onSubmit }: { onSubmit: (formData: { name: string; roomNumber: number | null; checkIn: string; checkOut: string }) => void}) => {
     const [formState, setFormState] = useState({
       name: '',
       roomNumber: null as number | null,
@@ -118,7 +125,7 @@ const AvailabilityCalendar: React.FC<AvailabilityCalendarProps> = ({ availabilit
       checkOut: ''
     });
 
-    const handleInputChange = (field: string, value: any) => {
+    const handleInputChange = (field: string, value: string | number) => {
       setFormState(prev => ({ ...prev, [field]: value }));
     };
 
@@ -135,7 +142,7 @@ const AvailabilityCalendar: React.FC<AvailabilityCalendarProps> = ({ availabilit
             <input
               type={field === 'roomNumber' ? 'number' : field.includes('check') ? 'date' : 'text'}
               required
-              value={(formState as any)[field] ?? ''}
+              value={formState[field as keyof typeof formState] || ''} // No "any" type here
               onChange={e => handleInputChange(field, field === 'roomNumber' ? parseInt(e.target.value) : e.target.value)}
               className="block w-full mt-1 p-2 border rounded-md shadow-sm focus:ring focus:ring-opacity-50"
               placeholder={`Enter ${field}`}
@@ -184,7 +191,7 @@ const AvailabilityCalendar: React.FC<AvailabilityCalendarProps> = ({ availabilit
     }
   };
 
-  const handleAction = async (formData: any) => {
+  const handleAction = async (formData: FormData) => {
     try {
       await SignUpLogIn("gogufase16@gmail.com", "qwert!123", "Ricardo", "Meza", hotelId);
       console.log(formData);

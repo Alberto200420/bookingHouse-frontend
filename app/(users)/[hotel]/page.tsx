@@ -1,4 +1,4 @@
-import type { Metadata, ResolvingMetadata } from "next";
+import type { Metadata } from "next";
 import { FaRegCalendarAlt } from "react-icons/fa";
 import { GrCatalog } from "react-icons/gr";
 import { notFound } from 'next/navigation';
@@ -27,7 +27,7 @@ async function getHotelData(path: string): Promise<HotelData | null> {
   }
 }
 
-export async function generateMetadata( { params }: Props, parent: ResolvingMetadata): Promise<Metadata> {
+export async function generateMetadata( { params }: Props): Promise<Metadata> {
   const hotelData = await getHotelData(params.hotel);
 
   if (!hotelData) {
