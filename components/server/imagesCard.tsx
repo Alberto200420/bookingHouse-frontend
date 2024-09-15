@@ -23,6 +23,7 @@ export default function ImagesCard({ id, title, header_image, domain, availabili
         {availabilities.length > 0 && (
           <div className="mt-2">
             <p className="text-sm font-medium">Available times:</p>
+            {require_reservation ? <p className="mb-1 text-red-600 text-xs">**Reservation required**</p> : <div></div> }
             <div className="flex flex-wrap gap-2 mt-1">
               {availabilities.map((time, index) => (
                 <span key={index} className="text-xs bg-gray-200 rounded-md px-2 py-1">
@@ -32,9 +33,6 @@ export default function ImagesCard({ id, title, header_image, domain, availabili
             </div>
           </div>
         )}
-        <p className="mt-1 text-xs text-gray-500">
-          {require_reservation ? 'Reservation required' : 'No reservation needed'}
-        </p>
       </div>
     </div>
   );
