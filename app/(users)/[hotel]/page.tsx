@@ -69,7 +69,7 @@ export default async function HotelPage({ params }: Props) {
             <div className="flex">
               <Image
                 alt={`${hotelData.hotel_name} logo`}
-                src={`${process.env.MEDIA_API_URL}${hotelData.logo}`}
+                src={`${hotelData.logo}`}
                 width={200}
                 height={200}
               />

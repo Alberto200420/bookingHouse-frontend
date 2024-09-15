@@ -11,7 +11,7 @@ export default function ImagesCard({ id, title, header_image, domain, availabili
         <div className="w-full h-full">
           <Image
             alt={title}
-            src={`${process.env.MEDIA_API_URL}${header_image}`}
+            src={`${header_image}`}
             fill={true}  // Fills the entire div
             className="object-cover object-center rounded-t-lg"
           />

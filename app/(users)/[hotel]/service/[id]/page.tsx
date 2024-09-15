@@ -65,7 +65,7 @@ export default async function ServicePage({ params }: { params: { id: string } }
       {/* Full width, partial length header image */}
       <div className="relative w-full h-[50vh] overflow-hidden">
         <Image
-          src={`${process.env.MEDIA_API_URL}${service.header_image}`}
+          src={`${service.header_image}`}
           alt={service.title}
           fill={true}  // Ensure it fills the container
           className="object-cover object-center"  // Maintain aspect ratio, cover the area object-none
@@ -83,7 +83,7 @@ export default async function ServicePage({ params }: { params: { id: string } }
 
           {service.menu && (
             <div className="flex items-center my-6">
-              <a href={`${process.env.MEDIA_API_URL}${service.menu}`} target="_blank" className='bg-gray-400 py-1 px-2 flex items-center rounded'>
+              <a href={`${service.menu}`} target="_blank" className='bg-gray-400 py-1 px-2 flex items-center rounded'>
                 <LuBookOpen className="text-brown-500 text-2xl mr-2" />
                 <span className="text-lg">Menu</span>
               </a>
@@ -118,7 +118,7 @@ export default async function ServicePage({ params }: { params: { id: string } }
               <div key={index} className="relative">
                 <div className="relative w-full h-48">
                   <Image 
-                    src={`${process.env.MEDIA_API_URL}${img.image}`} 
+                    src={`${img.image}`} 
                     alt={img.description}
                     fill={true}  // Ensures the image fills the container
                     className="object-cover rounded-lg"  // Same styling as before
