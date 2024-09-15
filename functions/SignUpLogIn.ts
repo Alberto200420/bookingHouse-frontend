@@ -1,9 +1,9 @@
 'use server';
 import { cookies } from 'next/headers';
 
-export default async function SignUpLogIn(email: string, password: string, firstName: string, lastName: string) {
+export default async function SignUpLogIn(email: string, password: string, firstName: string, lastName: string, hotelId: any) {
   const loginData = { email, password };
-  const signupData = { first_name: firstName, last_name: lastName, email, password, re_password: password };
+  const signupData = { first_name: firstName, last_name: lastName, email, password, re_password: password, hotel_belonging: hotelId};
 
   try {
     // Attempt to log in

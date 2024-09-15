@@ -7,6 +7,7 @@ import Link from "next/link";
 import ImagesCard from "@/components/server/imagesCard";
 import { getTodayServices, TodayServicesProps } from "@/functions/GetTodayServices";
 import { getCategoryAndServiceList, CategoriesAndServicesProps, ServicesProps } from "@/functions/GetCategory&ServiceList";
+import IdHotelSetter from "@/components/client/idHotelSetter";
 
 type Props = { params: { hotel: string } };
 type HotelData = { id: number; hotel_name: string; logo: string; };
@@ -59,6 +60,9 @@ export default async function HotelPage({ params }: Props) {
 
   return (
     <div className="px-8">
+
+      <IdHotelSetter hotelId={hotelData.id} />
+      
       {/* navbar */}
       <header>
         <nav aria-label="Global" className="flex items-center justify-between pt-6 ">

@@ -3,7 +3,7 @@ import { TodayServicesProps } from "@/functions/GetTodayServices";
 import Link from "next/link";
 
 export default function ImagesCard({ id, title, header_image, domain, availabilities, require_reservation }: TodayServicesProps ) {
-  console.log(header_image)
+
   return (
     <div className="group relative rounded-lg shadow hover:shadow-lg transition-all">
       <div className="aspect-w-1 aspect-h-1 w-full overflow-hidden rounded-t-lg">

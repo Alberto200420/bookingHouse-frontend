@@ -7,6 +7,7 @@ import { formatTime } from '@/functions/formatTime';
 import { Reserve } from '@/functions/Reserve';
 import Modal from '../server/modal';
 import SignUpLogIn from '@/functions/SignUpLogIn';
+import { useHotelContext } from './contexStore';
 import { useRouter, useParams } from 'next/navigation'
 
 interface TimeSlot {
@@ -37,8 +38,9 @@ const AvailabilityCalendar: React.FC<AvailabilityCalendarProps> = ({ availabilit
   const [reservationStatus, setReservationStatus] = useState<string | null>(null);
   const [attendees, setAttendees] = useState(1);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const params = useParams<{ hotel: string }>()
-  const router = useRouter()
+  const params = useParams<{ hotel: string }>();
+  const router = useRouter();
+  const { hotelId } = useHotelContext();
   const [modalProps, setModalProps] = useState({
     title: '',
     content: '' as string | ReactNode,
@@ -184,7 +186,7 @@ const AvailabilityCalendar: React.FC<AvailabilityCalendarProps> = ({ availabilit
 
   const handleAction = async (formData: any) => {
     try {
-      await SignUpLogIn("gogufase16@gmail.com", "qwert!123", "Ricardo", "Meza");
+      await SignUpLogIn("gogufase16@gmail.com", "qwert!123", "Ricardo", "Meza", hotelId);
       console.log(formData);
       closeModal();
       // Attempt to make the reservation again
