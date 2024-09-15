@@ -1,4 +1,5 @@
 import "@/styles/globals.css";
+import { HotelContextProvider } from "@/components/client/contexStore";
 
 export default function RootLayout({
   children,
@@ -8,7 +9,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={'antialiased'} >
-        {children}
+        <HotelContextProvider>
+          {children}
+        </HotelContextProvider>
       </body>
     </html>
   );

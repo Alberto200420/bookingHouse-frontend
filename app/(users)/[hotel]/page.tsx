@@ -1,5 +1,4 @@
-import logo from "@/assets/buenaventura-horizontal-logo.jpg"
-import type { Metadata, ResolvingMetadata } from "next";
+import type { Metadata } from "next";
 import { FaRegCalendarAlt } from "react-icons/fa";
 import { GrCatalog } from "react-icons/gr";
 import { notFound } from 'next/navigation';
@@ -8,6 +7,7 @@ import Link from "next/link";
 import ImagesCard from "@/components/server/imagesCard";
 import { getTodayServices, TodayServicesProps } from "@/functions/GetTodayServices";
 import { getCategoryAndServiceList, CategoriesAndServicesProps, ServicesProps } from "@/functions/GetCategory&ServiceList";
+import IdHotelSetter from "@/components/client/idHotelSetter";
 
 type Props = { params: { hotel: string } };
 type HotelData = { id: number; hotel_name: string; logo: string; };
@@ -27,7 +27,7 @@ async function getHotelData(path: string): Promise<HotelData | null> {
   }
 }
 
-export async function generateMetadata( { params }: Props, parent: ResolvingMetadata): Promise<Metadata> {
+export async function generateMetadata( { params }: Props): Promise<Metadata> {
   const hotelData = await getHotelData(params.hotel);
 
   if (!hotelData) {
@@ -60,13 +60,16 @@ export default async function HotelPage({ params }: Props) {
 
   return (
     <div className="px-8">
+
+      <IdHotelSetter hotelId={hotelData.id} />
+      
       {/* navbar */}
       <header>
         <nav aria-label="Global" className="flex items-center justify-between pt-6 ">
             <div className="flex">
               <Image
                 alt={`${hotelData.hotel_name} logo`}
-                src={logo}
+                src={`${process.env.MEDIA_API_URL}${hotelData.logo}`}
                 width={200}
                 height={200}
               />

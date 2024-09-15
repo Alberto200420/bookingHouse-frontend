@@ -1,11 +1,16 @@
 import PathHeader from '@/components/client/pathHeader';
 import { Metadata } from 'next';
-// import Image from 'next/image';
+import Image from 'next/image';
 import { notFound } from 'next/navigation';
 import { LuBookOpen } from "react-icons/lu";
 import AvailabilityCalendar from '@/components/client/calendar';
 
 // TypeScript interface for the API response
+interface TimeSlot {
+  date: string;
+  times: string[];
+}
+
 interface ServiceData {
   id: string;
   category: string;
@@ -13,7 +18,7 @@ interface ServiceData {
   menu: string | null;
   header_image: string;
   description: string;
-  availabilities: Record<string, any>;
+  availabilities: Record<string, { availableTimes: string[], DatesTimesNotAvailable: TimeSlot[] }>;
   requirement: string;
   require_reservation: boolean;
   maximum_capacity: number;
@@ -57,11 +62,16 @@ export default async function ServicePage({ params }: { params: { id: string } }
 
   return (
     <main>
-      <img
-        src={'https://litter.catbox.moe/9i0j6r.jpeg'}
-        alt={service.title}
-        className="mb-4 w-full h-1/3"
-      />
+      {/* Full width, partial length header image */}
+      <div className="relative w-full h-[50vh] overflow-hidden">
+        <Image
+          src={`${process.env.MEDIA_API_URL}${service.header_image}`}
+          alt={service.title}
+          fill={true}  // Ensure it fills the container
+          className="object-cover object-center"  // Maintain aspect ratio, cover the area object-none
+        />
+        {/* You can add overlay content here if needed */}
+      </div>
       <div className="max-w-screen-lg mx-auto">
 
         <section className="mb-8 px-4">
@@ -73,14 +83,14 @@ export default async function ServicePage({ params }: { params: { id: string } }
 
           {service.menu && (
             <div className="flex items-center my-6">
-              <a href="#" className='bg-gray-400 py-1 px-2 flex items-center rounded'>
+              <a href={`${process.env.MEDIA_API_URL}${service.menu}`} target="_blank" className='bg-gray-400 py-1 px-2 flex items-center rounded'>
                 <LuBookOpen className="text-brown-500 text-2xl mr-2" />
                 <span className="text-lg">Menu</span>
               </a>
             </div>
           )}
 
-          <p className="mb-2 text-lg">{service.description}</p>
+          <p className="mb-4 text-lg">{service.description}</p>
 
           {service.requirement && (
             <div className="mb-4">
@@ -90,14 +100,13 @@ export default async function ServicePage({ params }: { params: { id: string } }
           )}
 
           {service.maximum_capacity && (
-            <div className="mb-4">
-              <h3 className="text-2xl font-bold mb-2">Max Capacity</h3>
-              <p>{service.maximum_capacity} people</p>
+            <div>
+              <div className='flex items-center' >
+              <h3 className="text-2xl font-bold">Max Capacity</h3>
+              {service.require_reservation ? <p className="ml-1 text-red-600 text-sm">**Reservation required**</p> : <div></div> }
+              </div>
+              <p className='text-lg'>{service.maximum_capacity} people</p>
             </div>
-          )}
-
-          {service.require_reservation && (
-            <p className="mb-2">Reservation required</p>
           )}
         </section>
 
@@ -107,11 +116,14 @@ export default async function ServicePage({ params }: { params: { id: string } }
           <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
             {service.images.map((img, index) => (
               <div key={index} className="relative">
-                <img 
-                  src={`${process.env.API_BACKEND}${img.image}`} 
-                  alt={img.description} 
-                  className="w-full h-48 object-cover rounded-lg"
-                />
+                <div className="relative w-full h-48">
+                  <Image 
+                    src={`${process.env.MEDIA_API_URL}${img.image}`} 
+                    alt={img.description}
+                    fill={true}  // Ensures the image fills the container
+                    className="object-cover rounded-lg"  // Same styling as before
+                  />
+                </div>
                 <div className="absolute bottom-0 left-0 right-0 bg-black bg-opacity-50 text-white p-2 text-sm">
                   {img.description}
                 </div>

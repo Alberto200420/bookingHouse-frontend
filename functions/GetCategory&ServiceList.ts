@@ -8,6 +8,7 @@ export type ServicesProps = {
 };
 
 export type CategoriesAndServicesProps = {
+  image_display: string;
   category_name: string;
   services: ServicesProps[];
 };
@@ -15,7 +16,7 @@ export type CategoriesAndServicesProps = {
 export const getCategoryAndServiceList = cache(async (): Promise<CategoriesAndServicesProps[]> => {
   try {
     const response = await fetch(`${process.env.API_BACKEND}/directory/categories/services/`, {
-      next: { revalidate: 86400 } // Revalidate every day
+      next: { revalidate: 3600 } // Revalidate every day
     });
 
     if (!response.ok) {
