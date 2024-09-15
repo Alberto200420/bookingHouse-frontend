@@ -1,6 +1,6 @@
 import PathHeader from '@/components/client/pathHeader';
 import { Metadata } from 'next';
-// import Image from 'next/image';
+import Image from 'next/image';
 import { notFound } from 'next/navigation';
 import { LuBookOpen } from "react-icons/lu";
 import AvailabilityCalendar from '@/components/client/calendar';
@@ -57,11 +57,16 @@ export default async function ServicePage({ params }: { params: { id: string } }
 
   return (
     <main>
-      <img
-        src={'https://litter.catbox.moe/9i0j6r.jpeg'}
-        alt={service.title}
-        className="mb-4 w-full h-1/3"
-      />
+      {/* Full width, partial length header image */}
+      <div className="relative w-full h-[50vh] overflow-hidden">
+        <Image
+          src={`${process.env.MEDIA_API_URL}${service.header_image}`}
+          alt={service.title}
+          fill={true}  // Ensure it fills the container
+          className="object-cover object-center"  // Maintain aspect ratio, cover the area object-none
+        />
+        {/* You can add overlay content here if needed */}
+      </div>
       <div className="max-w-screen-lg mx-auto">
 
         <section className="mb-8 px-4">

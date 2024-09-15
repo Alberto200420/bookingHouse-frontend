@@ -1,4 +1,3 @@
-import logo from "@/assets/buenaventura-horizontal-logo.jpg"
 import type { Metadata, ResolvingMetadata } from "next";
 import { FaRegCalendarAlt } from "react-icons/fa";
 import { GrCatalog } from "react-icons/gr";
@@ -66,7 +65,7 @@ export default async function HotelPage({ params }: Props) {
             <div className="flex">
               <Image
                 alt={`${hotelData.hotel_name} logo`}
-                src={logo}
+                src={`${process.env.MEDIA_API_URL}${hotelData.logo}`}
                 width={200}
                 height={200}
               />

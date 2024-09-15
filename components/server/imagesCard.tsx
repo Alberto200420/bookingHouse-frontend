@@ -3,12 +3,13 @@ import { TodayServicesProps } from "@/functions/GetTodayServices";
 import Link from "next/link";
 
 export default function ImagesCard({ id, title, header_image, domain, availabilities, require_reservation }: TodayServicesProps ) {
+  console.log(header_image)
   return (
     <div className="group relative rounded-lg shadow hover:shadow-lg transition-all">
       <div className="aspect-w-1 aspect-h-1 w-full overflow-hidden rounded-t-lg">
         <img
           alt={title}
-          src={'https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-01.jpg'}
+          src={`${process.env.MEDIA_API_URL}${header_image}`}
           className="h-full w-full object-cover object-center lg:h-full lg:w-full"
         />
       </div>
